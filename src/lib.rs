@@ -34,7 +34,9 @@ impl MidiAccess {
     }
 
     pub fn outputs(&self) -> Vec<MidiOutput> {
-        for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
+        let map: js_sys::Map = self.access.outputs().dyn_into().unwrap();
+
+        for entry in js_sys::try_iter(&map.keys()).unwrap().unwrap() {
             console::log_1(&entry.unwrap());
         }
 
