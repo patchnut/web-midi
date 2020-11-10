@@ -39,9 +39,9 @@ impl MidiAccess {
 }
 
 pub struct MidiInput {
-
+    input: web_sys::MidiInput,
 }
 
 pub struct MidiOutput {
-
+    output: web_sys::MidiOutput,
 }
