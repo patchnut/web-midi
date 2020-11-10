@@ -1,8 +1,9 @@
-use web_sys::{MidiOptions, console};
+use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
+use web_sys::{console, MidiOptions};
 
 pub struct MidiAccess {
-    access: web_sys::MidiAccess
+    access: web_sys::MidiAccess,
 }
 
 impl MidiAccess {
@@ -10,7 +11,8 @@ impl MidiAccess {
         let window = web_sys::window().expect("no global `window` exists");
 
         let access: web_sys::MidiAccess = JsFuture::from(
-            window.navigator()
+            window
+                .navigator()
                 .request_midi_access_with_options(MidiOptions::new().sysex(true).software(true))
                 .unwrap(),
         )
@@ -22,7 +24,9 @@ impl MidiAccess {
     }
 
     pub fn inputs(&self) -> Vec<MidiInput> {
-        for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
+        let map: js_sys::Map = self.access.inputs().dyn_into().unwrap();
+
+        for entry in js_sys::try_iter(&map.values()).unwrap().unwrap() {
             console::log_1(&entry.unwrap());
         }
 
