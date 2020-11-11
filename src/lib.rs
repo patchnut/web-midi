@@ -25,24 +25,26 @@ impl MidiAccess {
     }
 
     pub fn inputs(&self) -> Vec<MidiInput> {
-        console::log_1(&self.access.inputs());
+        let mut result: Vec<MidiInput> = Vec::new();
+
         for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
-            // console::log_1(&entry.unwrap());
             let array: Array = entry.unwrap().into();
-            console::log_1(&array.get(1));
+            result.push(MidiInput {input: array.get(1).into()});
         }
 
-        Vec::new()
+        result
     }
 
     pub fn outputs(&self) -> Vec<MidiOutput> {
-        // let map: js_sys::Map = self.access.outputs().dyn_into().unwrap();
 
-        // for entry in js_sys::try_iter(&map.keys()).unwrap().unwrap() {
-        //     console::log_1(&entry.unwrap());
-        // }
+        let mut result: Vec<MidiOutput> = Vec::new();
 
-        Vec::new()
+        for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
+            let array: Array = entry.unwrap().into();
+            result.push(MidiOutput {output: array.get(1).into()});
+        }
+
+        result
     }
 }
 
