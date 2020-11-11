@@ -1,6 +1,7 @@
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{console, MidiOptions};
+use js_sys::Array;
 
 pub struct MidiAccess {
     access: web_sys::MidiAccess,
@@ -24,21 +25,22 @@ impl MidiAccess {
     }
 
     pub fn inputs(&self) -> Vec<MidiInput> {
-        let map: js_sys::Map = self.access.inputs().dyn_into().unwrap();
-
-        for entry in js_sys::try_iter(&map.values()).unwrap().unwrap() {
-            console::log_1(&entry.unwrap());
+        console::log_1(&self.access.inputs());
+        for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
+            // console::log_1(&entry.unwrap());
+            let array: Array = entry.unwrap().into();
+            console::log_1(&array.get(1));
         }
 
         Vec::new()
     }
 
     pub fn outputs(&self) -> Vec<MidiOutput> {
-        let map: js_sys::Map = self.access.outputs().dyn_into().unwrap();
+        // let map: js_sys::Map = self.access.outputs().dyn_into().unwrap();
 
-        for entry in js_sys::try_iter(&map.keys()).unwrap().unwrap() {
-            console::log_1(&entry.unwrap());
-        }
+        // for entry in js_sys::try_iter(&map.keys()).unwrap().unwrap() {
+        //     console::log_1(&entry.unwrap());
+        // }
 
         Vec::new()
     }

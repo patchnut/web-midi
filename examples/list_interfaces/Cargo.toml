@@ -10,7 +10,9 @@ crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.68"
+wasm-bindgen-futures="0.4.18"
+
 async-std = {version = "1.6"}
-web-sys = {version = "0.3.45", features = ["console", "Document", "Element", "HtmlElement", "Node", "Window", "Navigator"]}
+web-sys = {version = "0.3.45", features = ["console", "Document", "Element", "HtmlElement", "MidiOptions", "Node", "Window", "Navigator"]}
 
 web-midi = {path="../.."}

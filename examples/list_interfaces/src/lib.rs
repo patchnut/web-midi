@@ -1,6 +1,7 @@
 use async_std::task;
 use wasm_bindgen::prelude::*;
-use web_sys::console;
+// use web_sys::{console, MidiOptions, MidiAccess};
+use wasm_bindgen_futures::JsFuture;
 use web_midi::MidiAccess;
 
 #[wasm_bindgen]
@@ -13,13 +14,23 @@ pub fn main_js() -> Result<(), JsValue> {
 
         let access = MidiAccess::get_access().await;
 
+        // let access: web_sys::MidiAccess = JsFuture::from(
+        //     window
+        //         .navigator()
+        //         .request_midi_access_with_options(MidiOptions::new().sysex(true).software(true))
+        //         .unwrap(),
+        // )
+        // .await
+        // .unwrap()
+        // .into();
+
         for input in access.inputs() {
 
         }
 
-        for output in access.outputs() {
+        // for output in access.outputs() {
             
-        }
+        // }
 
         // val.set_inner_html(&format!("{:?}", access.inputs()));
         // body.append_child(&val).unwrap();
