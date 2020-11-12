@@ -29,7 +29,7 @@ impl MidiAccess {
         for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
             let array: Array = entry.unwrap().into();
             result.push(MidiInput {
-                _input: array.get(1).into(),
+                input: array.get(1).into(),
             });
         }
 
@@ -42,7 +42,7 @@ impl MidiAccess {
         for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
             let array: Array = entry.unwrap().into();
             result.push(MidiOutput {
-                _output: array.get(1).into(),
+                output: array.get(1).into(),
             });
         }
 
@@ -51,9 +51,21 @@ impl MidiAccess {
 }
 
 pub struct MidiInput {
-    _input: web_sys::MidiInput,
+    input: web_sys::MidiInput,
+}
+
+impl MidiInput {
+    pub fn name(&self) -> Option<String> {
+        self.input.name()
+    }
 }
 
 pub struct MidiOutput {
-    _output: web_sys::MidiOutput,
+    output: web_sys::MidiOutput,
+}
+
+impl MidiOutput {
+    pub fn name(&self) -> Option<String> {
+        self.output.name()
+    }
 }
