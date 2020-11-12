@@ -1,8 +1,21 @@
 use async_std::task;
 use wasm_bindgen::prelude::*;
-// use web_sys::{console, MidiOptions, MidiAccess};
 use wasm_bindgen_futures::JsFuture;
 use web_midi::MidiAccess;
+
+#[wasm_bindgen]
+extern "C" {
+    // Use `js_namespace` here to bind `console.log(..)` instead of just
+    // `log(..)`
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
+
+macro_rules! console {
+    // Note that this is using the `log` function imported above during
+    // `bare_bones`
+    ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
+}
 
 #[wasm_bindgen]
 pub fn main_js() -> Result<(), JsValue> {
@@ -14,27 +27,16 @@ pub fn main_js() -> Result<(), JsValue> {
 
         let access = MidiAccess::get_access().await;
 
-        // let access: web_sys::MidiAccess = JsFuture::from(
-        //     window
-        //         .navigator()
-        //         .request_midi_access_with_options(MidiOptions::new().sysex(true).software(true))
-        //         .unwrap(),
-        // )
-        // .await
-        // .unwrap()
-        // .into();
-
         for input in access.inputs() {
-
+            console!("input {}", input.name().unwrap())
         }
 
-        // for output in access.outputs() {
-            
-        // }
-
-        // val.set_inner_html(&format!("{:?}", access.inputs()));
-        // body.append_child(&val).unwrap();
+        for output in access.outputs() {
+            console!("output {}", output.name().unwrap())
+        }
     });
 
     Ok(())
 }
+
+
