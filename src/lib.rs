@@ -1,7 +1,6 @@
 use js_sys::Array;
-use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{console, MidiOptions};
+use web_sys::MidiOptions;
 
 pub struct MidiAccess {
     access: web_sys::MidiAccess,
@@ -30,7 +29,7 @@ impl MidiAccess {
         for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
             let array: Array = entry.unwrap().into();
             result.push(MidiInput {
-                input: array.get(1).into(),
+                _input: array.get(1).into(),
             });
         }
 
@@ -43,7 +42,7 @@ impl MidiAccess {
         for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
             let array: Array = entry.unwrap().into();
             result.push(MidiOutput {
-                output: array.get(1).into(),
+                _output: array.get(1).into(),
             });
         }
 
@@ -52,9 +51,9 @@ impl MidiAccess {
 }
 
 pub struct MidiInput {
-    input: web_sys::MidiInput,
+    _input: web_sys::MidiInput,
 }
 
 pub struct MidiOutput {
-    output: web_sys::MidiOutput,
+    _output: web_sys::MidiOutput,
 }
