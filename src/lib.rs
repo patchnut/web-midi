@@ -110,6 +110,20 @@ pub struct MidiOutput {
 }
 
 impl MidiOutput {
+    pub fn clear(&self) {
+        self.output.clear()
+    }
+
+    // TODO: fix input and output types to be something sensible
+    pub fn send(&self, data: &JsValue) -> Result<(), JsValue> {
+        self.output.send(data)
+    }
+
+    // TODO: fix input and output types to be something sensible
+    pub fn send_with_timestamp(&self, data: &JsValue, timestamp: f64) -> Result<(), JsValue> {
+        self.output.send_with_timestamp(data, timestamp)
+    }
+
     pub fn id(&self) -> String {
         self.output.id()
     }
