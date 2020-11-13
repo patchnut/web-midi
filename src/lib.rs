@@ -56,8 +56,44 @@ pub struct MidiInput {
 }
 
 impl MidiInput {
+    pub fn id(&self) -> String {
+        self.input.id()
+    }
+
+    pub fn manufacturer(&self) -> Option<String> {
+        self.input.manufacturer()
+    }
+
     pub fn name(&self) -> Option<String> {
         self.input.name()
+    }
+
+    pub fn version(&self) -> Option<String> {
+        self.input.version()
+    }
+
+    // pub fn state(&self) -> MidiPortDeviceState {
+    //     self.input.state()
+    // }
+
+    // pub fn connection(&self) -> MidiPortConnectionState {
+    //     self.input.connection()
+    // }
+
+    // pub fn onstatechange(&self) -> ... {
+    //     todo!()
+    // }
+
+    // pub fn set_onstatechange(&self) -> ... {
+    //     todo!()
+    // }
+
+    pub async fn open(&self) -> JsValue {
+        JsFuture::from(self.input.open()).await.unwrap()
+    }
+
+    pub async fn close(&self) -> JsValue {
+        JsFuture::from(self.input.close()).await.unwrap()
     }
 }
 
