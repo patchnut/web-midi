@@ -56,6 +56,14 @@ pub struct MidiInput {
 }
 
 impl MidiInput {
+    // pub fn onmidimessage(&self) -> ... {
+    //     todo!()
+    // }
+
+    // pub fn set_onmidimessage(&self) -> ... {
+    //     todo!()
+    // }
+
     pub fn id(&self) -> String {
         self.input.id()
     }
