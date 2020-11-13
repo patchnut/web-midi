@@ -5,7 +5,7 @@ authors = ["Mendelt Siebenga <msiebenga@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-web-sys = {version = "0.3.45", features = ["console", "Document", "Element", "HtmlElement", "MidiAccess", "MidiOptions", "MidiInput", "MidiInputMap", "MidiOutput", "MidiOutputMap", "Node", "Window", "Navigator"]}
+web-sys = {version = "0.3.45", features = ["console", "Document", "Element", "HtmlElement", "MidiAccess", "MidiOptions", "MidiInput", "MidiInputMap", "MidiOutput", "MidiOutputMap", "MidiPort", "Node", "Window", "Navigator"]}
 js-sys = "0.3.45"
 wasm-bindgen="0.2.68"
 wasm-bindgen-futures="0.4.18"

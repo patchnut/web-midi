@@ -1,4 +1,5 @@
 use js_sys::Array;
+use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::MidiOptions;
 
@@ -65,7 +66,43 @@ pub struct MidiOutput {
 }
 
 impl MidiOutput {
+    pub fn id(&self) -> String {
+        self.output.id()
+    }
+
+    pub fn manufacturer(&self) -> Option<String> {
+        self.output.manufacturer()
+    }
+
     pub fn name(&self) -> Option<String> {
         self.output.name()
+    }
+
+    pub fn version(&self) -> Option<String> {
+        self.output.version()
+    }
+
+    // pub fn state(&self) -> MidiPortDeviceState {
+    //     self.output.state()
+    // }
+
+    // pub fn connection(&self) -> MidiPortConnectionState {
+    //     self.output.connection()
+    // }
+
+    // pub fn onstatechange(&self) -> ... {
+    //     todo!()
+    // }
+
+    // pub fn set_onstatechange(&self) -> ... {
+    //     todo!()
+    // }
+
+    pub async fn open(&self) -> JsValue {
+        JsFuture::from(self.output.open()).await.unwrap()
+    }
+
+    pub async fn close(&self) -> JsValue {
+        JsFuture::from(self.output.close()).await.unwrap()
     }
 }
