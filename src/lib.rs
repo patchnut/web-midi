@@ -96,12 +96,14 @@ impl MidiInput {
     //     todo!()
     // }
 
-    pub async fn open(&self) -> JsValue {
-        JsFuture::from(self.input.open()).await.unwrap()
+    pub async fn open(&self) -> &Self {
+        JsFuture::from(self.input.open()).await.unwrap();
+        self
     }
 
-    pub async fn close(&self) -> JsValue {
-        JsFuture::from(self.input.close()).await.unwrap()
+    pub async fn close(&self) -> &Self {
+        JsFuture::from(self.input.close()).await.unwrap();
+        self
     }
 }
 
@@ -156,11 +158,13 @@ impl MidiOutput {
     //     todo!()
     // }
 
-    pub async fn open(&self) -> JsValue {
-        JsFuture::from(self.output.open()).await.unwrap()
+    pub async fn open(&self) -> &Self {
+        JsFuture::from(self.output.open()).await.unwrap();
+        self
     }
 
-    pub async fn close(&self) -> JsValue {
-        JsFuture::from(self.output.close()).await.unwrap()
+    pub async fn close(&self) -> &Self {
+        JsFuture::from(self.output.close()).await.unwrap();
+        self
     }
 }
