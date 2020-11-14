@@ -28,11 +28,11 @@ pub fn main_js() -> Result<(), JsValue> {
         let access = MidiAccess::get_access().await;
 
         for input in access.inputs() {
-            console!("input {}", input.name().unwrap())
+            console!("input {} {} {}", input.name().unwrap(), input.manufacturer().unwrap(), input.version().unwrap())
         }
 
         for output in access.outputs() {
-            console!("output {}", output.name().unwrap())
+            console!("output {} {} {}", output.name().unwrap(), output.manufacturer().unwrap(), output.version().unwrap())
         }
     });
 
