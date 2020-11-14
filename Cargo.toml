@@ -1,8 +1,15 @@
 [package]
 name = "web-midi"
 version = "0.1.0"
-authors = ["Mendelt Siebenga <msiebenga@gmail.com>"]
 edition = "2018"
+
+authors = ["Mendelt Siebenga <msiebenga@gmail.com>"]
+license = "MIT/Apache-2.0"
+description = "Wraps the web-midi calls from the web-sys library in a more rusty interface"
+repository = "https://github.com/mendelt/web-midi"
+categories = ["api-bindings", "wasm", "multimedia::audio"]
+keywords = ["midi", "wasm"]
+readme = "README.md"
 
 [dependencies]
 web-sys = {version = "0.3.45", features = ["console", "Document", "Element", "HtmlElement", "MidiAccess", "MidiOptions", "MidiInput", "MidiInputMap", "MidiOutput", "MidiOutputMap", "MidiPort", "Node", "Window", "Navigator"]}

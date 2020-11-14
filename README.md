@@ -1,2 +1,2 @@
 # web-midi
-Rust wasm library to talk to midi interfaces in a browser
+Wrap web-sys webmidi calls in a more rusty API
