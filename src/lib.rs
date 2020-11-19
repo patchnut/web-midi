@@ -53,6 +53,14 @@ impl MidiAccess {
     pub fn sysex_enabled(&self) -> bool {
         self.access.sysex_enabled()
     }
+
+    // pub fn onstatechange(&self) -> ... {
+    //     todo!()
+    // }
+
+    // pub fn set_onstatechange(&self) -> ... {
+    //     todo!()
+    // }
 }
 
 pub struct MidiInput {
