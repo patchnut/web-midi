@@ -1,7 +1,7 @@
 use js_sys::Array;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;
-use web_sys::{MidiOptions, MidiPortDeviceState};
+use web_sys::{MidiOptions, MidiPortConnectionState, MidiPortDeviceState};
 
 pub struct MidiAccess {
     access: web_sys::MidiAccess,
@@ -84,9 +84,9 @@ impl MidiInput {
         self.input.state()
     }
 
-    // pub fn connection(&self) -> MidiPortConnectionState {
-    //     self.input.connection()
-    // }
+    pub fn connection(&self) -> MidiPortConnectionState {
+        self.input.connection()
+    }
 
     // pub fn onstatechange(&self) -> ... {
     //     todo!()
@@ -146,9 +146,9 @@ impl MidiOutput {
         self.output.state()
     }
 
-    // pub fn connection(&self) -> MidiPortConnectionState {
-    //     self.output.connection()
-    // }
+    pub fn connection(&self) -> MidiPortConnectionState {
+        self.output.connection()
+    }
 
     // pub fn onstatechange(&self) -> ... {
     //     todo!()
