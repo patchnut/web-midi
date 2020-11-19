@@ -49,6 +49,10 @@ impl MidiAccess {
 
         result
     }
+
+    pub fn sysex_enabled(&self) -> bool {
+        self.access.sysex_enabled()
+    }
 }
 
 pub struct MidiInput {
