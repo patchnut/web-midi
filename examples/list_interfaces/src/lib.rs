@@ -25,7 +25,7 @@ pub fn main_js() -> Result<(), JsValue> {
         let document = window.document().expect("should have a document on window");
         let body = document.body().expect("document should have a body");
 
-        let access = MidiAccess::get_access().await;
+        let access = MidiAccess::get_access(window.navigator()).await;
 
         for input in access.inputs() {
             console!("input {} {} {}", input.name().unwrap(), input.manufacturer().unwrap(), input.version().unwrap())
