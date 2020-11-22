@@ -8,12 +8,11 @@ pub struct MidiAccess {
 }
 
 impl MidiAccess {
-    pub async fn get_access() -> Self {
-        let window = web_sys::window().expect("no global `window` exists");
+    pub async fn get_access(navigator: web_sys::Navigator) -> Self {
+        // let window = web_sys::window().expect("no global `window` exists");
 
         let access: web_sys::MidiAccess = JsFuture::from(
-            window
-                .navigator()
+            navigator
                 .request_midi_access_with_options(MidiOptions::new().sysex(true).software(true))
                 .unwrap(),
         )

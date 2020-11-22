@@ -12,7 +12,7 @@ keywords = ["midi", "wasm"]
 readme = "README.md"
 
 [dependencies]
-web-sys = {version = "0.3.45", features = ["console", "Document", "Element", "HtmlElement", "MidiAccess", "MidiInput", "MidiInputMap", "MidiOptions", "MidiOutput", "MidiOutputMap", "MidiPort", "MidiPortConnectionState", "MidiPortDeviceState",  "Node", "Window", "Navigator"]}
+web-sys = {version = "0.3.45", features = ["console", "MidiAccess", "MidiInput", "MidiInputMap", "MidiOptions", "MidiOutput", "MidiOutputMap", "MidiPort", "MidiPortConnectionState", "MidiPortDeviceState", "Navigator"]}
 js-sys = "0.3.45"
 wasm-bindgen="0.2.68"
 wasm-bindgen-futures="0.4.18"
