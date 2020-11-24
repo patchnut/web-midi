@@ -29,30 +29,30 @@ impl MidiAccess {
 
     /// Get all available Midi inputs
     pub fn inputs(&self) -> Vec<MidiInput> {
-        let mut result: Vec<MidiInput> = Vec::new();
-
-        for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
-            let array: Array = entry.unwrap().into();
-            result.push(MidiInput {
-                input: array.get(1).into(),
-            });
-        }
-
-        result
+        js_sys::try_iter(&self.access.inputs())
+            .unwrap()
+            .unwrap()
+            .map(|entry| {
+                let array: Array = entry.unwrap().into();
+                MidiInput {
+                    input: array.get(1).into(),
+                }
+            })
+            .collect()
     }
 
     /// Get all available Midi outputs
     pub fn outputs(&self) -> Vec<MidiOutput> {
-        let mut result: Vec<MidiOutput> = Vec::new();
-
-        for entry in js_sys::try_iter(&self.access.inputs()).unwrap().unwrap() {
-            let array: Array = entry.unwrap().into();
-            result.push(MidiOutput {
-                output: array.get(1).into(),
-            });
-        }
-
-        result
+        js_sys::try_iter(&self.access.outputs())
+            .unwrap()
+            .unwrap()
+            .map(|entry| {
+                let array: Array = entry.unwrap().into();
+                MidiOutput {
+                    output: array.get(1).into(),
+                }
+            })
+            .collect()
     }
 
     /// Return true if sysex is enabled for this MidiAccess
