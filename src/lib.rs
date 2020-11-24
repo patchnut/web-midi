@@ -1,13 +1,17 @@
+//! Wrap web-sys webmidi calls in a more rusty API
+
 use js_sys::Array;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{MidiOptions, MidiPortConnectionState, MidiPortDeviceState};
 
+/// This is the main entry point to the web midi library and gives access to midi inputs and outputs
 pub struct MidiAccess {
     access: web_sys::MidiAccess,
 }
 
 impl MidiAccess {
+    /// Open a midi MidiAccess instance from a Navigator
     pub async fn get_access(navigator: web_sys::Navigator) -> Self {
         // let window = web_sys::window().expect("no global `window` exists");
 
@@ -23,6 +27,7 @@ impl MidiAccess {
         Self { access }
     }
 
+    /// Get all available Midi inputs
     pub fn inputs(&self) -> Vec<MidiInput> {
         let mut result: Vec<MidiInput> = Vec::new();
 
@@ -36,6 +41,7 @@ impl MidiAccess {
         result
     }
 
+    /// Get all available Midi outputs
     pub fn outputs(&self) -> Vec<MidiOutput> {
         let mut result: Vec<MidiOutput> = Vec::new();
 
@@ -49,6 +55,7 @@ impl MidiAccess {
         result
     }
 
+    /// Return true if sysex is enabled for this MidiAccess
     pub fn sysex_enabled(&self) -> bool {
         self.access.sysex_enabled()
     }
