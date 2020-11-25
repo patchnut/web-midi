@@ -132,44 +132,55 @@ pub struct MidiOutput {
 }
 
 impl MidiOutput {
-    pub fn new(output: web_sys::MidiOutput) -> Self {
+    fn new(output: web_sys::MidiOutput) -> Self {
         Self { output }
     }
 
+    /// Clear any pending data that has not yet been sent from the MidiOutput's queue
     pub fn clear(&self) {
         self.output.clear()
     }
 
-    // TODO: fix input and output types to be something sensible
+    /// Enqueue a message to be sent to the corresponding MIDI port.
+    /// The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it. 
     pub fn send(&self, data: &JsValue) -> Result<(), JsValue> {
+    // TODO: fix input and output types to be something sensible
         self.output.send(data)
     }
 
-    // TODO: fix input and output types to be something sensible
+    /// Enqueue a message to be sent to the corresponding MIDI port.
+    /// The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it. 
     pub fn send_with_timestamp(&self, data: &JsValue, timestamp: f64) -> Result<(), JsValue> {
+    // TODO: fix input and output types to be something sensible
         self.output.send_with_timestamp(data, timestamp)
     }
 
+    /// A unique ID of the port. This can be used by developers to remember ports the user has chosen for their application.
     pub fn id(&self) -> String {
         self.output.id()
     }
 
+    /// The manufacturer of the port
     pub fn manufacturer(&self) -> Option<String> {
         self.output.manufacturer()
     }
 
+    /// The system name of the port
     pub fn name(&self) -> Option<String> {
         self.output.name()
     }
 
+    /// The version of the port.
     pub fn version(&self) -> Option<String> {
         self.output.version()
     }
 
+    /// The state of the device
     pub fn state(&self) -> MidiPortDeviceState {
         self.output.state()
     }
 
+    /// The state of the connection to the device.
     pub fn connection(&self) -> MidiPortConnectionState {
         self.output.connection()
     }
@@ -182,11 +193,13 @@ impl MidiOutput {
     //     todo!()
     // }
 
+    /// Make the MIDI device corresponding to the MIDIPort explicitly available. Note that this call is NOT required in order to use the MIDIPort - calling send() on a MIDIOutput or attaching a MIDIMessageEvent handler on a MIDIInputPort will cause an implicit open().
     pub async fn open(&self) -> &Self {
         JsFuture::from(self.output.open()).await.unwrap();
         self
     }
 
+    /// Make the MIDI device corresponding to the MIDIPort explicitly unavailable (subsequently changing the state from "open" to "connected"). Note that successful invocation of this method will result in MIDI messages no longer being delivered to MIDIMessageEvent handlers on a MIDIInputPort (although setting a new handler will cause an implicit open()).
     pub async fn close(&self) -> &Self {
         JsFuture::from(self.output.close()).await.unwrap();
         self
