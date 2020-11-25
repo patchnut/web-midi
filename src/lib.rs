@@ -36,9 +36,7 @@ impl MidiAccess {
             .unwrap()
             .map(|entry| {
                 let array: Array = entry.unwrap().into();
-                MidiInput {
-                    input: array.get(1).into(),
-                }
+                MidiInput::new(array.get(1).into())
             })
             .collect()
     }
@@ -50,9 +48,7 @@ impl MidiAccess {
             .unwrap()
             .map(|entry| {
                 let array: Array = entry.unwrap().into();
-                MidiOutput {
-                    output: array.get(1).into(),
-                }
+                MidiOutput::new(array.get(1).into())
             })
             .collect()
     }
@@ -76,6 +72,10 @@ pub struct MidiInput {
 }
 
 impl MidiInput {
+    pub fn new(input: web_sys::MidiInput) -> Self {
+        MidiInput { input }
+    }
+
     // pub fn onmidimessage(&self) -> ... {
     //     todo!()
     // }
@@ -132,6 +132,10 @@ pub struct MidiOutput {
 }
 
 impl MidiOutput {
+    pub fn new(output: web_sys::MidiOutput) -> Self {
+        Self { output }
+    }
+
     pub fn clear(&self) {
         self.output.clear()
     }
