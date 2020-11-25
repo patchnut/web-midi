@@ -1,5 +1,7 @@
 //! Wrap web-sys webmidi calls in a more rusty API
 
+pub mod error;
+
 use js_sys::Array;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;
