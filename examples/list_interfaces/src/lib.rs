@@ -16,11 +16,21 @@ pub fn main_js() -> Result<(), JsValue> {
 
         for input in access.inputs() {
             input.open().await;
-            info!("input {} {} {}", input.name().unwrap(), input.manufacturer().unwrap(), input.version().unwrap());
+            info!(
+                "input {} {} {}",
+                input.name().unwrap(),
+                input.manufacturer().unwrap(),
+                input.version().unwrap()
+            );
         }
 
         for output in access.outputs() {
-            info!("output {} {} {}", output.name().unwrap(), output.manufacturer().unwrap(), output.version().unwrap());
+            info!(
+                "output {} {} {}",
+                output.name().unwrap(),
+                output.manufacturer().unwrap(),
+                output.version().unwrap()
+            );
         }
     });
 
