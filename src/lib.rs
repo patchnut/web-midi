@@ -2,14 +2,17 @@
 
 pub mod error;
 
+use web_sys::Event;
 use js_sys::Array;
-use wasm_bindgen::JsValue;
+use wasm_bindgen::closure::Closure;
+use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{MidiOptions, MidiPortConnectionState, MidiPortDeviceState};
 
 /// This is the main entry point to the web midi library and gives access to midi inputs and outputs
 pub struct MidiAccess {
     access: web_sys::MidiAccess,
+    callback: Closure<dyn Fn(Event)>
 }
 
 impl MidiAccess {
@@ -17,16 +20,24 @@ impl MidiAccess {
     pub async fn get_access(navigator: web_sys::Navigator) -> Self {
         // let window = web_sys::window().expect("no global `window` exists");
 
-        let access: web_sys::MidiAccess = JsFuture::from(
-            navigator
-                .request_midi_access_with_options(MidiOptions::new().sysex(true).software(true))
-                .unwrap(),
+        Self::new(
+            JsFuture::from(
+                navigator
+                    .request_midi_access_with_options(MidiOptions::new().sysex(true).software(true))
+                    .unwrap(),
+            )
+            .await
+            .unwrap()
+            .into(),
         )
-        .await
-        .unwrap()
-        .into();
+    }
 
-        Self { access }
+    fn new(access: web_sys::MidiAccess) -> Self {
+        let callback = Closure::wrap(Box::new(event) as Box<dyn Fn(_)>);
+
+        access.set_onstatechange(Some(callback.as_ref().unchecked_ref()));
+
+        Self { access, callback }
     }
 
     /// Get all available Midi inputs
@@ -65,6 +76,10 @@ impl MidiAccess {
     // pub fn set_onstatechange(&self) -> ... {
     //     todo!()
     // }
+}
+
+fn event(_evt: web_sys::Event) {
+    log::info!("state change");
 }
 
 pub struct MidiInput {
@@ -142,16 +157,16 @@ impl MidiOutput {
     }
 
     /// Enqueue a message to be sent to the corresponding MIDI port.
-    /// The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it. 
+    /// The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it.
     pub fn send(&self, data: &JsValue) -> Result<(), JsValue> {
-    // TODO: fix input and output types to be something sensible
+        // TODO: fix input and output types to be something sensible
         self.output.send(data)
     }
 
     /// Enqueue a message to be sent to the corresponding MIDI port.
-    /// The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it. 
+    /// The data contains one or more valid, complete MIDI messages. Running status is not allowed in the data, as underlying systems may not support it.
     pub fn send_with_timestamp(&self, data: &JsValue, timestamp: f64) -> Result<(), JsValue> {
-    // TODO: fix input and output types to be something sensible
+        // TODO: fix input and output types to be something sensible
         self.output.send_with_timestamp(data, timestamp)
     }
 
