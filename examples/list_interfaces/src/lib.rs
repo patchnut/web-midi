@@ -15,6 +15,7 @@ pub fn main_js() -> Result<(), JsValue> {
         let access = MidiAccess::get_access(window.navigator()).await;
 
         for input in access.inputs() {
+            input.open().await;
             info!("input {} {} {}", input.name().unwrap(), input.manufacturer().unwrap(), input.version().unwrap());
         }
 
